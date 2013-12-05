@@ -2,7 +2,7 @@
 define([], function () {
     'use strict';
     
-    $(function () {
+    $(document).ready(function () {
 		alert("Bleh")
 	})
     return 1;
