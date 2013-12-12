@@ -1,24 +1,30 @@
 /*global define */
 define([], function () {
     'use strict';
-    
+    var myArray = new Array();
+     
     $(document).ready(function() {
-    $(".button").bind('click', $.proxy(function() {
-        var status = $(this).attr('id');
-        console.log(ThisId)
+        $(".button").click( function(){
+             var thisId = $(this).attr('id')
+        console.log(thisId)
         if ( thisId === "red") {
-        alert(status);
-	}else if ( thisId === "blue"){
-	
-	}else if ( thisId === "yellow"){
-	
-	}else if ( thisId === "green"){
-		
-	} else {
+			myArray.push (thisId);
+			
+		}else if ( thisId === "blue"){
+			myArray.push (thisId);
+				
+		}else if ( thisId === "yellow"){
+			myArray.push (thisId);
+				
+		}else if ( thisId === "green"){
+			myArray.push (thisId);
+				
+		} else {
 		console.log("Fail!")
 	}	
-    
-});​
+	console.log (myArray);
+	})
+})
     
     return 1;
 });
