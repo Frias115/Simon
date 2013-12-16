@@ -13,11 +13,18 @@ define([], function () {
 				  button.css("background-color", oldColor).dequeue();
 			  })
 		  }
-		  
-    
-      $(document).ready(function() {
+	var showSequence = function(seq){
+		for(var id in seq) {
+			setTimeout(function () {
+				highlight($("#"+seq[id]), "#fff" , 600*id)
+			}, 600*id)
+		}
+	}
+
+    $(document).ready(function() {
         $(".button").click( function(){
 			randomArray.push( colors[Math.floor(Math.random() * colors.length)] );
+			show
              var thisId = $(this).attr('id')
         console.log(thisId)
         if ( thisId === "red") {
@@ -45,6 +52,28 @@ define([], function () {
 	}	
 	console.log (myArray);
 	console.log (randomArray);
+	
+	for(var i = 0; i < randomArray.length; i++){
+				randomArray[i]
+				if (randomArray[i] === "red"){
+					highlight ($(red) , "#ff0000");
+					
+				}
+				else if (randomArray[i] === "blue"){
+					highlight ($(blue) , "#00BFFF");
+					
+					}
+				else if (randomArray[i] === "yellow"){
+					highlight ($(yellow) , "#FFFF00");
+					
+				}
+				else if (randomArray[i] === "green"){
+					highlight ($(green) , "#40FF00");
+					
+				}
+				else{}
+			}
+			
 	})
 })
     
