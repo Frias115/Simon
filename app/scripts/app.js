@@ -1,6 +1,7 @@
 /*global define */
 define([], function () {
     'use strict';
+    var userPlaying = false
     var myArray = new Array();
     var randomArray = new Array();
     var colors = ["red", "blue", "yellow", "green"];
@@ -13,89 +14,94 @@ define([], function () {
 				  button.css("background-color", oldColor).dequeue();
 			  })
 		  }
-	 var showSequence = function(seq) {
-       for(var id in seq) {
-          //highlight($("#"+seq[id]), "#fff", 600*id)
-          (function(id){
-            setTimeout( function() {
-              highlight($("#"+seq[id]), "#fff")
-            }, 600*id)
-          })(id)
-       }
+		  
+		  
+	 var showSequence = function() {
+        var seq = randomArray
+        for(var id in seq) {
+           (function(id){
+             setTimeout( function() {
+               highlight($("#"+seq[id]), "#fff")
+             }, 600*id)
+           })(id)
+        }
+        setTimeout( function() {
+            userPlaying = true
+        }, 600*seq.length)
     }
     
-    var initialize = function (bleh){
-		bleh.push( colors[Math.floor(Math.random() * colors.length)] );
+    
+     var initialize = function() {
+        colors = jQuery.map( $(".button"),
+                       function(element) {
+                         return $(element).attr('id')
+                       })
+    }
+	
+	
+	var generateRandomArray = function () {
+		randomArray.push( colors[Math.floor(Math.random() * colors.length)] );
 	}
 	
-	var generateRandomArray = function (bleh) {
-		bleh.push( colors[Math.floor(Math.random() * colors.length)] );
-	}
 	
-	var showRandomArray = function (bleh) {
-		showSequence (bleh);
-	}
-	
-	var userArray = function (bloh) {
-		$(".button").click( function(){
-			console.log(thisId)
-			var thisId = $(this).attr('id')
-			
-			if ( thisId === "red") {
-				bloh.push (thisId);
-				highlight ($(this) , "#ff0000");
-			
-			}else if ( thisId === "blue"){
-				bloh.push (thisId);
-				highlight ($(this) , "#00BFFF");
-			
-			}else if ( thisId === "yellow"){
-				bloh.push (thisId);
-				highlight ($(this) , "#FFFF00");
-		    
-		    }else if ( thisId === "green"){
-				bloh.push (thisId);
-				highlight ($(this) , "#40FF00");
-			} else {
-				console.log("Fail!")
-		}
-		console.log (myArray);
-		console.log (randomArray);
-		})
-	}
-
 	var compareSequences = function (){
-		if (randomArray === myArray){
-			true
+		for ( var i=0; i <= randomArray.length; i++){
+			if (myArray[i] !== randomArray[i]){
+				return false
+			}
 		}
-		else{
-			false
-		}
-		
+		return true
 	}
+		
+	
 	
 	var endGame = function (){
-		
+		var tryagain = confirm( "Error!. Do you wish to restart?")
+		if (tryagain) {
+			myArray.length = 0;
+			randomArray.length = 0;
+			setTimeout( function() {
+                generateRandomArray()
+                showSequence()
+            }, 2000)
+		}
 	}
 		
 
     $(document).ready(function() {
-		initialize( randomArray )
-		while (true) {
-			generateRandomArray( randomArray)
-			showRandomArray(randomArray)
-			
-			$(".button").click( function(){
-				if(userPlaying){
-					
+        initialize()
+
+        generateRandomArray()
+        showSequence()
+        
+        
+
+        $('.button').click( function() {
+			console.log (myArray);
+			console.log (randomArray);
+            if(userPlaying) {
+                var thisId = $(this).attr('id')
+                highlight($(this), "#fff")
+                myArray.push(thisId)
+
+                if (myArray.length >= randomArray.length) {
+                    userPlaying = false
+                    if (compareSequences()){
+                    myArray.length = 0
+                    setTimeout(function() {
+                        generateRandomArray()
+                        showSequence()
+                    }, 1000)
+				    }else {
+					endGame()
+					}
 				}
-			})
-			userArray(myArray)
-			if (!compareSequences()){
-				break;
 			}
-		}
-		endGame()
+		
+		
+		
+		
+		
 		/*
         $(".button").click( function(){
 			randomArray.push( colors[Math.floor(Math.random() * colors.length)] );
@@ -151,6 +157,7 @@ define([], function () {
 			}
 			
 	})*/
+})
 })
     
     return 1;
