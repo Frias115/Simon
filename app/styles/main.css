@@ -13,7 +13,14 @@
   border-width: 1px;
   border-style: solid;
   border-color: #ffffff;
-  margin: 510px 0px 0px 725px;
+  margin: 510px 0px 0px 765px;
+  font-size: 70px;
+  color: #ffffff;
+}
+
+#Level {
+  position: absolute;
+  margin: 510px 0px 0px 820px;
   font-size: 70px;
   color: #ffffff;
 }

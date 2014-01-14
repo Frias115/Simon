@@ -15,9 +15,9 @@ define([], function () {
 			  })
 		  }
 		  
-		  
-	 var showSequence = function() {
+	var showSequence = function() {
         var seq = randomArray
+        $("#Level").html("Level " + randomArray.length)
         for(var id in seq) {
            (function(id){
              setTimeout( function() {
@@ -31,9 +31,7 @@ define([], function () {
 				} else if (seq[id] === 'yellow'){
 					highlight ($("#"+seq[id]), '#FFFF00')
 				}
-				
-               //highlight($("#"+seq[id]), "#fff")
-             }, 600*id)
+				}, 600*id)
            })(id)
         }
         setTimeout( function() {
@@ -61,7 +59,10 @@ define([], function () {
 				return false
 			}
 		}
+		
+		
 		return true
+		
 	}
 		
 	
@@ -71,6 +72,7 @@ define([], function () {
 		if (tryagain) {
 			myArray.length = 0;
 			randomArray.length = 0;
+			
 			$('#Start').click(function() {
             $(this).css('color', '#fff').fadeOut()
             setTimeout( function() {
@@ -88,10 +90,13 @@ define([], function () {
         $('#Start').click(function() {
             $(this).css('color', '#fff').fadeOut()
             setTimeout( function() {
+				$("#Level").html("Level 1");
                 generateRandomArray()
                 showSequence()
             }, 500)
         })
+        
+        
 
         $('.button').click( function() {
 			console.log (myArray);
