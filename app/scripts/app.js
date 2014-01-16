@@ -5,7 +5,8 @@ define([], function () {
     var myArray = new Array();
     var randomArray = new Array();
     var colors = ["red", "blue", "yellow", "green"];
-    var maxLevel;
+    var maxLevel = 0;
+    var newMaxLevel;
     
     //Illuminates buttons
     var highlight = function(button,color){
@@ -75,16 +76,22 @@ define([], function () {
 	var endGame = function (){
 		var tryagain = confirm( "Error!. Do you wish to restart?")
 		if (tryagain) {
-			maxLevel = randomArray.length - 1;
-			$("#maxlevel").html("Highest level: " + maxLevel)
-			
+			newMaxLevel = randomArray.length - 1;
+			if (newMaxLevel >= maxLevel){
+			  maxLevel = newMaxLevel
+			  $("#maxlevel").html("Highest level: " + maxLevel)
+		    }
+			else {
+			  $("#maxlevel").html("Highest level: " + maxLevel)
+		    } 
+		     
 			myArray.length = 0;
 			randomArray.length = 0;
 			
             setTimeout( function() {
                 showSequence()
-            }, 500)
-        }
+            }, 1500)
+            }
 		else {
 			document.location.reload()
 		}
