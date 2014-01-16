@@ -5,7 +5,9 @@ define([], function () {
     var myArray = new Array();
     var randomArray = new Array();
     var colors = ["red", "blue", "yellow", "green"];
+    var maxLevel;
     
+    //Illuminates buttons
     var highlight = function(button,color){
 		var oldColor = button.css("background-color")
 		button.css("background-color" , color).dequeue()
@@ -15,9 +17,16 @@ define([], function () {
 			  })
 		  }
 		  
+	//Show random generate sequence	  
 	var showSequence = function() {
         var seq = randomArray
-        $("#Level").html("Level " + randomArray.length)
+        
+        if ( randomArray.length < 1) {
+			$("#level").html("Level 1 ")
+		}
+		else {
+			$("#level").html("Level " + randomArray.length)
+		}
         for(var id in seq) {
            (function(id){
              setTimeout( function() {
@@ -39,7 +48,7 @@ define([], function () {
         }, 600*seq.length)
     }
     
-    
+    //Start game
      var initialize = function() {
         colors = jQuery.map( $(".button"),
                        function(element) {
@@ -47,57 +56,56 @@ define([], function () {
                        })
     }
 	
-	
+	//Generate random sequence
 	var generateRandomArray = function () {
 		randomArray.push( colors[Math.floor(Math.random() * colors.length)] );
 	}
 	
-	
+	//Compare random sequence with user sequence
 	var compareSequences = function (){
 		for (var i in myArray){
 			if (myArray[i] !== randomArray[i]){
 				return false
 			}
 		}
-		
-		
 		return true
-		
 	}
 		
-	
-	
+	//Restart button and end button
 	var endGame = function (){
 		var tryagain = confirm( "Error!. Do you wish to restart?")
 		if (tryagain) {
+			maxLevel = randomArray.length - 1;
+			$("#maxlevel").html("Highest level: " + maxLevel)
+			
 			myArray.length = 0;
 			randomArray.length = 0;
 			
-			$('#Start').click(function() {
-            $(this).css('color', '#fff').fadeOut()
             setTimeout( function() {
-                generateRandomArray()
                 showSequence()
             }, 500)
-        })
+        }
+		else {
+			document.location.reload()
 		}
 	}
 		
-
+    //Main
     $(document).ready(function() {
         initialize()
         
-        $('#Start').click(function() {
+        //Show start button
+        $('#start').click(function() {
             $(this).css('color', '#fff').fadeOut()
             setTimeout( function() {
-				$("#Level").html("Level 1");
+				$("#level").html("Level 1");
                 generateRandomArray()
                 showSequence()
             }, 500)
         })
         
         
-
+        //The game (You lose it)
         $('.button').click( function() {
 			console.log (myArray);
 			console.log (randomArray);

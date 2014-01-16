@@ -8,7 +8,7 @@
   background-color: #000000;
 }
 
-#Start {
+#start {
   position: absolute;
   border-width: 1px;
   border-style: solid;
@@ -18,10 +18,17 @@
   color: #ffffff;
 }
 
-#Level {
+#level {
   position: absolute;
   margin: 510px 0px 0px 820px;
   font-size: 70px;
+  color: #ffffff;
+}
+
+#maxlevel {
+  position: absolute;
+  margin: 590px 0px 0px 847px;
+  font-size: 25px;
   color: #ffffff;
 }
 
